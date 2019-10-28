@@ -22,8 +22,6 @@ def main():
     data = load_mnist()
     data = list(data)
 
-
-
     # test_data
 
     test_data = list(load_mnist(dataset='testing'))

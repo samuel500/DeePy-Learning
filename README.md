@@ -1,14 +1,16 @@
 # DeePy Learning
 
-A deep learning library written exclusively in Python. 
+A lightweight deep learning library written in Python. 
 
 ## Notes
 
--NumPy 1.17.1
+- Python 3.6
 
--Scipy 1.2.0
+- NumPy 1.17.1
 
--Matplotlib 3.0.2
+- Scipy 1.2.0
+
+- Matplotlib 3.0.2
 
 
 ## Usage
@@ -76,3 +78,9 @@ vae_mn.train(data, 10, testX/255, testY, batch_size=128, test_rate=5)
 ```
 
 ![alt text](https://github.com/samuel500/DeePy-Learning/blob/master/vae_10epochs.png)
+
+
+
+## Disclaimer
+
+This is primarily an educational tool.
