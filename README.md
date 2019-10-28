@@ -13,7 +13,8 @@ A deep learning library written exclusively in Python.
 
 ## Usage
 
-Example:
+
+#### Example 1:
 
 ```
 from models import *
@@ -52,7 +53,8 @@ nn_mnist.train(data, epochs=40, testX=testX/255, testY=testY, batch_size=32, tes
 ```
 
 
-Example 2:
+
+#### Example 2:
 
 ```
 from vae import VAE
@@ -71,5 +73,6 @@ testX = np.array(testX)
 vae_mn = VAE(data[0][1].shape, latent_dim=32, output_dim=784)
 vae_mn.train(data, 10, testX/255, testY, batch_size=128, test_rate=5)
 
-
 ```
+
+![alt text](https://github.com/samuel500/DeePy-Learning/blob/master/vae_10epochs.png)
