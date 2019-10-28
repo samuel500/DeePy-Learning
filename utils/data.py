@@ -23,10 +23,8 @@ def rand_batch(data, batch_size=32):
     return np.array(x_batch), np.array(one_hot(y_batch))
 
 
-
 def one_hot(labels, max_label = 10):
     return np.eye(max_label)[labels]
-
 
 
 def load_mnist(dataset = "training", path = "/home/sam/datasets/MNIST"):

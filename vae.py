@@ -265,8 +265,8 @@ class VAE:
                 ]
             else:
                 self.layers = layers
-            #self.loss_function = cross_entropy()
-            self.loss_function = mse()
+            self.loss_function = cross_entropy()
+            #self.loss_function = mse()
 
         def forward(self, x, mode='train'):
             out = x
