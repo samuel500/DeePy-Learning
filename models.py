@@ -20,9 +20,11 @@ class Model:
     """
 
     """
-    def __init__(self, input_dim, output_dim, layers=None):
+    def __init__(self, input_dim, output_dim, layers=None, optimizer=None, loss_function=None):
         
         self.layers = layers
+        self.optimizer = optimizer
+        self.loss_function = loss_function
         print(self.layers)
         #self.input_dim = np.prod(input_dim) # if first hidden layer fully connected, input is flattened
         self.input_dim = input_dim
@@ -64,6 +66,7 @@ class Model:
                     skip_nb += 1
             else:
                 skip_nb += 1
+
         for layer in list(reversed(self.layers))[:len(self.layers)-skip_nb]:
             dx = layer.compute_gradients(dx)
 
@@ -109,9 +112,11 @@ class Model:
 
 class Classifier(Model):
 
-    def __init__(self, input_dim, output_dim, layers=None):
-        if layers is None:
-            layers = [
+    def __init__(self, input_dim, output_dim, layers=None, **kwargs):
+        super().__init__(input_dim, output_dim, layers, **kwargs)
+
+        if self.layers is None:
+            self.layers = [
                 FC(512, trainable=True),
                 ReLU(),
                 FC(256, trainable=True),
@@ -125,11 +130,12 @@ class Classifier(Model):
         #self.optimizer = Momentum()
         #self.optimizer = SGD(0.2)
         #self.optimizer = RMSprop(0.001)
-        self.optimizer = Adam(1e-3)
+        if self.optimizer is None:
+            self.optimizer = Adam(1e-3)
         #self.optimizer = Nesterov()
-        self.loss_function = cross_entropy_softmax()
+        if self.loss_function is None:
+            self.loss_function = cross_entropy_softmax()
 
-        super().__init__(input_dim, output_dim, layers)
 
     def test(self, testX, testY):
         preds = self.predict(testX, mode='test')
@@ -140,24 +146,25 @@ class Classifier(Model):
 
 class AE(Model):
 
-    def __init__(self, input_dim, output_dim, layers=None):
-        if layers is None:
-            layers = [
+    def __init__(self, input_dim, output_dim, layers=None, **kwargs):
+        super().__init__(input_dim, output_dim, layers, **kwargs)
+
+        if self.layers is None:
+            self.layers = [
                 FC(256, trainable=True),
                 ReLU(),
                 FC(64, trainable=True),
                 ReLU(),
                 FC(256, trainable=True),
                 ReLU(),
-                #FC(128, trainable=False),
-                #ReLU(),
                 FC(output_dim, trainable=True),
                 sigmoid()
             ]
-        self.optimizer = Adam(1e-3)
-        #self.optimizer = Nesterov()
-        self.loss_function = mse()
-        super().__init__(input_dim, output_dim, layers)
+
+        if self.optimizer is None:
+            self.optimizer = Adam(1e-3)
+        if self.loss_function is None:
+            self.loss_function = mse()
 
 
     def test(self, testX, testY=None, disp=5):
